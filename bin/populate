@@ -1,0 +1,28 @@
+<?php
+define("BASE_DIR", dirname(__DIR__));
+require BASE_DIR . '/bootstrap.php';
+
+$sampleData = yaml_parse(file_get_contents(BASE_DIR . "/preload.yaml"));
+foreach($sampleData as $class => $instances) {
+    $className = "Model\\$class";
+    foreach($instances as $instanceData) {
+        $instance = new $className();
+        foreach($instanceData as $field => $value) {
+            $capField = ucfirst($field);
+            if (is_array($value)) {
+                $getter = "get$capField" . "s";
+                foreach ($value as $code) {
+                    $member = $entityManager->getRepository("Model\\$capField")->findOneBy(["code" => $code]);
+                    printf("ID is %d\n", $member->getId());
+                    $instance->$getter()->add($member);
+                    $entityManager->persist($member);
+                }
+            } else {
+              $setter = "set$capField";
+              $instance->$setter($value);
+            }
+        }
+        $entityManager->persist($instance);
+    }
+    $entityManager->flush();
+}
