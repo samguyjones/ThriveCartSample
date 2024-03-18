@@ -21,13 +21,13 @@ final class RedBoghTest extends \Model\AbstractTest
     {
         $cart = $this->makeCart(3);
         $redBogh = new RedBogh();
-        $this->assertEquals(-16.47, $redBogh->getOfferValue($cart, []));
+        $this->assertEquals(-16.48, $redBogh->getOfferValue($cart, []));
     }
 
     public function testFiveRedWidgets(): void
     {
         $cart = $this->makeCart(5);
         $redBogh = new RedBogh();
-        $this->assertEquals(-32.94, $redBogh->getOfferValue($cart, []));
+        $this->assertEquals(-32.96, $redBogh->getOfferValue($cart, []));
     }
 }

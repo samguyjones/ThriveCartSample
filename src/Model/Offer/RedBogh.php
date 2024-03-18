@@ -10,7 +10,7 @@ class RedBogh implements OfferInterface
             return 0;
         }
         $secondOnes = floor($reds->getQuantity() / 2);
-        $halfPrice = round($reds->getProduct()->getPrice() / 2, 2, PHP_ROUND_HALF_DOWN);
+        $halfPrice = round($reds->getProduct()->getPrice() / 2, 2, PHP_ROUND_HALF_UP);
         return -$halfPrice * $secondOnes;
     }
 }

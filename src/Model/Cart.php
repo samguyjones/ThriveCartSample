@@ -31,9 +31,13 @@ class Cart {
         return round(array_reduce($this->purchases, fn($total, $purchase) => $total += $purchase->getPrice(), 0), 2, PHP_ROUND_HALF_DOWN);
     }
 
+    /**
+     * Method that returns cost to customer.
+     */
     public function getCost(): float
     {
-        return round($this->getSubTotal() + $this->getOffset() + $this->getCharge(), 2, PHP_ROUND_HALF_DOWN);
+        $basePrice = $this->getSubTotal() + $this->getOffset();
+        return round($basePrice + $this->getCharge($basePrice), 2, PHP_ROUND_HALF_DOWN);
     }
 
     /**
@@ -71,13 +75,12 @@ class Cart {
      * 
      * If you want separate charges for separate things, you could move charges to the "offers" category.
      */
-    public function getCharge(): float
+    public function getCharge(float $basePrice): float
     {
-        $subTotal = $this->getSubTotal();
-        if ($subTotal > 90) {
+        if ($basePrice > 90) {
             return 0;
         }
-        if ($subTotal > 50) {
+        if ($basePrice > 50) {
             return 2.95;
         }
         return 4.95;

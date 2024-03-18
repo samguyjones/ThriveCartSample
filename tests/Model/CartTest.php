@@ -21,14 +21,9 @@ final class CartTest extends AbstractTest
     public function testGetCharge(): void
     {
         $cart = new Cart();
-        $red = $this->mockProduct('R01', 32.95);
-        $green = $this->mockProduct('G01', 24.95);
-        $cart->addPurchase($red);
-        $this->assertEquals(4.95, $cart->getCharge());
-        $cart->addPurchase($green);
-        $this->assertEquals(2.95, $cart->getCharge());
-        $cart->addPurchase($green, 2);
-        $this->assertEquals(0, $cart->getCharge());
+        $this->assertEquals(4.95, $cart->getCharge(20));
+        $this->assertEquals(2.95, $cart->getCharge(60));
+        $this->assertEquals(0, $cart->getCharge(100));
     }
 
     public function testGetPurchase(): void
@@ -47,7 +42,7 @@ final class CartTest extends AbstractTest
     {
         $cart = $this->makeCart(3,1,1,new Offer\RedBogh());
         $this->assertEquals("Model\Offer\RedBogh", get_class($cart->getPurchase("R01")->getProduct()->getOfferLogic()[0]));
-        $this->assertEquals(-16.47, $cart->getOffset());
+        $this->assertEquals(-16.48, $cart->getOffset());
     }
 
     public function testGetCost(): void
@@ -55,7 +50,7 @@ final class CartTest extends AbstractTest
         $cartOne = $this->makeCart(0,1,1);
         $this->assertEquals(37.85, $cartOne->getCost());
         $cartTwo = $this->makeCart(2,0,0, new Offer\RedBogh());
-        $this->assertEquals(54.38, $cartTwo->getCost());
+        $this->assertEquals(54.37, $cartTwo->getCost());
         $cartThree = $this->makeCart(1,1,0, new Offer\RedBogh());
         $this->assertEquals(60.85, $cartThree->getCost());
         $cartFour = $this->makeCart(3,0,2, new Offer\RedBogh());
