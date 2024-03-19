@@ -38,8 +38,7 @@ For this exercise, the cart isn't permanent. If this were a real web app, this
 would be another table, and purchase would act as a linking table to products.
 
 You add purchases, which the cart builds as it goes. Then it computes the final
-cost from subtotal (cost of products) + offset (possibly negative effect of offers)
-+ shipping charges.
+cost from subtotal (cost of products) + offset (possibly negative effect of offers) + shipping charges.
 
 ## Assumptions
 
